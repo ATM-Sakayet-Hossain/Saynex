@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+
+body{
+  background: rgba(73, 73, 239, 0.559);
+}
+
+
+/* echo "# Saynex" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/ATM-Sakayet-Hossain/Saynex.git
+git push -u origin main */
