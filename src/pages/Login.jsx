@@ -22,12 +22,6 @@ const Login = () => {
     } else if (password.length < 8) {
       setPasswordErr("Password must be at least 8 characters");
       isValid = false;
-    } else if (!/[A-Z]/.test(password)) {
-      setPasswordErr("Password must contain at least one uppercase letter");
-      isValid = false;
-    } else if (!/[0-9]/.test(password)) {
-      setPasswordErr("Password must contain at least one number");
-      isValid = false;
     } else {
       setPasswordErr("");
     }
