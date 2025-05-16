@@ -1,15 +1,13 @@
 @import "tailwindcss";
 
-#root {
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
 
 body{
   background: rgba(73, 73, 239, 0.559);
 }
 
+@theme{
+  --font-inter: "Inter", sans-serif;
+}
 
 /* echo "# Saynex" >> README.md
 git init
