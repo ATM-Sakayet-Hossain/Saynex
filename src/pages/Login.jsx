@@ -1,7 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+  // const [email, setEmail] = useState("")
+  // const [emailErr, setEmailErr] = useState("")
+  // const [name, setName] = useState("")
+  // const [nameErr, setNameErr] = useState("")
+  // const [password, setPassword] = useState("")
+  // const [passwordErr, setPasswordErr] = useState("")
+
+  // const handelSubmit = (e) => {
+    
+  //   e.prevantDefult();
+  //   let isValid = true;
+  //   if (!email) {
+  //     setEmailErr("Please type your name");
+  //     isValid = false;
+  //   } else {
+  //     setEmailErr("")
+  //   }
+  //   if (!name) {
+  //     setNameErr("Please type your name");
+  //     isValid = false;
+  //   } else {
+  //     setNameErr("")
+  //   }
+  //   if (!name) {
+  //     setPasswordErr("Please type your name");
+  //     isValid = false;
+  //   } else {
+  //     setPasswordErr("")
+  //   }
+  //   if (isValid) {
+  //     alert("Submitted");
+  //   }
+  // }
+
+
+
   return (
     <div className="flex items-center justify-center min-h-screen from-[#e0f7ff] to-[#ffffff]">
       <div className="w-full max-w-lg bg-white shadow-xl rounded-2xl px-8 py-10">
