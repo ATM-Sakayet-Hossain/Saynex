@@ -2,41 +2,39 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  // const [email, setEmail] = useState("")
-  // const [emailErr, setEmailErr] = useState("")
-  // const [name, setName] = useState("")
-  // const [nameErr, setNameErr] = useState("")
-  // const [password, setPassword] = useState("")
-  // const [passwordErr, setPasswordErr] = useState("")
+  const [email, setEmail] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
 
-  // const handelSubmit = (e) => {
-    
-  //   e.prevantDefult();
-  //   let isValid = true;
-  //   if (!email) {
-  //     setEmailErr("Please type your name");
-  //     isValid = false;
-  //   } else {
-  //     setEmailErr("")
-  //   }
-  //   if (!name) {
-  //     setNameErr("Please type your name");
-  //     isValid = false;
-  //   } else {
-  //     setNameErr("")
-  //   }
-  //   if (!name) {
-  //     setPasswordErr("Please type your name");
-  //     isValid = false;
-  //   } else {
-  //     setPasswordErr("")
-  //   }
-  //   if (isValid) {
-  //     alert("Submitted");
-  //   }
-  // }
-
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let isValid = true;
+    if (!email) {
+      setEmailErr("Please type your Email");
+      isValid = false;
+    } else {
+      setEmailErr("");
+    }
+    if (!password) {
+      setPasswordErr("Please type your password");
+      isValid = false;
+    } else if (password.length < 8) {
+      setPasswordErr("Password must be at least 8 characters");
+      isValid = false;
+    } else if (!/[A-Z]/.test(password)) {
+      setPasswordErr("Password must contain at least one uppercase letter");
+      isValid = false;
+    } else if (!/[0-9]/.test(password)) {
+      setPasswordErr("Password must contain at least one number");
+      isValid = false;
+    } else {
+      setPasswordErr("");
+    }
+    if (isValid) {
+      alert("Welcome");
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen from-[#e0f7ff] to-[#ffffff]">
@@ -53,16 +51,23 @@ const Login = () => {
           </p>
         </div>
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-bold text-black mb-1 translate-y-3 bg-white w-26 m-auto">
               Email Address
             </label>
             <input
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailErr("");
+              }}
               type="email"
-              placeholder="your@email.com"
+              placeholder="your@saynex.com"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
+            {emailErr && (
+              <p className="text-red-500 text-sm mt-1">{emailErr}</p>
+            )}
           </div>
 
           <div>
@@ -70,10 +75,17 @@ const Login = () => {
               Password
             </label>
             <input
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setPasswordErr("");
+              }}
               type="password"
               placeholder="••••••••"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
+            {passwordErr && (
+              <p className="text-red-500 text-sm mt-1">{passwordErr}</p>
+            )}
           </div>
 
           <button
@@ -85,7 +97,13 @@ const Login = () => {
         </form>
 
         <p className="text-sm text-center text-gray-500 mt-6">
-          Don’t have an account?
+          Forgot password?{" "}
+          <Link to="/forgotpassword" className="text-[#0275a6] hover:underline">
+            Reset
+          </Link>
+        </p>
+        <p className="text-sm text-center text-gray-500 mt-6">
+          Don’t have an account?{" "}
           <Link to="/signup" className="text-[#0275a6] hover:underline">
             Sign up
           </Link>
