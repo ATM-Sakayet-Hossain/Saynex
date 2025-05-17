@@ -9,7 +9,7 @@ const Home = () => {
       <div className="flex h-screen bg-gray-100">
         <Sidebar />
         <ChatList />
-        {/* <Chatwindow /> */}
+        <Chatwindow />
       </div>
     </>
   );
