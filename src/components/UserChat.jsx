@@ -5,7 +5,7 @@ const UserChat = ({path, image, name, children}) => {
   return (
     <Link
       to={path}
-      className="py-3.5 px-3 flex justify-between items-start group hover:bg-blue-400 rounded-md"
+      className="py-3.5 px-3 flex justify-between items-start group hover:bg-blue-400 duration-300 ease-in-out rounded-md"
     >
       <div className="flex gap-3 items-center">
         <img src={image} alt="PP image" className="w-12 rounded-full" />
