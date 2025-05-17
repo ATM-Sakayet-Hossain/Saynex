@@ -25,8 +25,19 @@ const Chatwindow = () => {
     { parson1: "bala pai, tui kn aso", parson2: "vala", style: "mt-17" },
     { parson1: "bala pai, tui kn aso", parson2: "vala", style: "mt-17" },
     { parson1: "bala pai, tui kn aso", parson2: "vala", style: "mt-17" },
-    { parson1: "bala pai, tui kn aso", parson2: "vala", style: "mt-17" },
-    { parson1: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi architecto numquam, dolorum minus temporibus modi fuga sequi ullam aspernatur cupiditate!", parson2: "vala", style: "mt-17" },
+    {
+      parson1:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi architecto numquam, dolorum minus temporibus modi fuga sequi ullam aspernatur cupiditate!",
+      parson2:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi architecto numquam, dolorum minus temporibus modi fuga sequi ullam aspernatur cupiditate!",
+      style: "mt-17",
+    },
+    {
+      parson1:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi architecto numquam, dolorum minus temporibus modi fuga sequi ullam aspernatur cupiditate!",
+      parson2: "vala",
+      style: "mt-17",
+    },
     { parson1: "sei sei", parson2: "scroll kore upore jaw", style: "mt-17" },
   ];
 
