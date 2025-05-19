@@ -102,6 +102,10 @@ const Login = () => {
             Sign up
           </Link>
         </p>
+        <p className="flex flex-col text-sm text-center text-gray-500 mt-6">
+          <Link to='/home' className="text-[#0275a6] hover:underline">Home Page</Link>
+          <Link to='/resetpassword' className="text-[#0275a6] hover:underline">Change Password</Link>
+        </p>
       </div>
     </div>
   );

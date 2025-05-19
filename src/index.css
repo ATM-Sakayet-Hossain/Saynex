@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+/* * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #000;
+	color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	overflow: hidden;
+}
+
+canvas {
+	display: block;
+	animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+	to {
+		rotate: 360deg;
+	}
+} */
 
 body{
   background: rgba(73, 73, 239, 0.559);
