@@ -1,52 +1,12 @@
 @import "tailwindcss";
 
-/* * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-body {
-	background-color: #000;
-	color: #fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-	overflow: hidden;
-}
-
-canvas {
-	display: block;
-	animation: rotate 10s linear infinite;
-}
-
-@keyframes rotate {
-	to {
-		rotate: 360deg;
-	}
-} */
-
 body{
   background: rgba(73, 73, 239, 0.559);
 }
-/* canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-} */
 
 @theme{
   --font-inter: "Inter", sans-serif;
 }
-
-/* echo "# Saynex" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/ATM-Sakayet-Hossain/Saynex.git
-git push -u origin main */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
