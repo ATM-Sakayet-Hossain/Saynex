@@ -2,14 +2,46 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const [userData, setUserData] = useState({
-    userFullName: "",
-    userEmail: "",
-    UserPassword: "",
-  });
+  const [email, setEmail] = useState("")
+  const [emailErr, setEmailErr] = useState("");
+  const [name, setName] = useState("");
+  const [nameErr, setNameErr] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
 
   const handleSubmit = (e) => {
-    console.log(userData);
+    e.preventDefault();
+    let isValid = true;
+    if (!email) {
+      setEmailErr("Please type your Email");
+      isValid = false;
+    } else {
+      setEmailErr("");
+    }
+    if (!name) {
+      setNameErr("Please type your name");
+      isValid = false;
+    } else {
+      setNameErr("");
+    }
+    if (!password) {
+      setPasswordErr("Please type your password");
+      isValid = false;
+    } else if (password.length < 8) {
+      setPasswordErr("Password must be at least 8 characters");
+      isValid = false;
+    } else if (!/[A-Z]/.test(password)) {
+      setPasswordErr("Password must contain at least one uppercase letter");
+      isValid = false;
+    } else if (!/[0-9]/.test(password)) {
+      setPasswordErr("Password must contain at least one number");
+      isValid = false;
+    } else {
+      setPasswordErr("");
+    }
+    if (isValid) {
+      alert("Submitted");
+    }
   };
 
   return (
@@ -33,13 +65,15 @@ const SignUp = () => {
               Email Address
             </label>
             <input
-              onChange={(e) =>
-                setUserData((prev) => ({ ...prev, userEmail: e.target.value }))
-              }
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailErr("");
+              }}
               type="email"
               placeholder="you@saynex.com"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
+            {emailErr && <p className="text-red-500 text-center text-sm">{emailErr}</p>}
           </div>
 
           <div>
@@ -47,13 +81,15 @@ const SignUp = () => {
               Full Name
             </label>
             <input
-              onChange={(e) =>
-                setUserData((prev) => ({ ...prev, userFullName: e.target.value }))
-              }
+              onChange={(e) => {
+                setName(e.target.value);
+                setNameErr("");
+              }}
               type="text"
               placeholder="Your Full Name"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
+            {nameErr && <p className="text-red-500 text-center text-sm">{nameErr}</p>}
           </div>
 
           <div>
@@ -61,13 +97,17 @@ const SignUp = () => {
               Password
             </label>
             <input
-              onChange={(e) =>
-                setUserData((prev) => ({ ...prev, UserPassword: e.target.value }))
-              }
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setPasswordErr("");
+              }}
               type="password"
               placeholder="••••••••"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
+            {passwordErr && (
+              <p className="text-red-500 text-center text-sm">{passwordErr}</p>
+            )}
           </div>
 
           <button
@@ -89,4 +129,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUp

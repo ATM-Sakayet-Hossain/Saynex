@@ -6,6 +6,7 @@ import Layout from "./components/layout/Index";
 import ForgotPassword from "./pages/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword"
 import Home from "./pages/Home";
+import Error from "./pages/Error";
 
 function App() {
   return (
@@ -14,12 +15,12 @@ function App() {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />}/>
-          {/* <Route path="/login1" element={<Login1 />}/> */}
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/" element={<Layout/>} >
             <Route index element={<Home/>} />
           </Route>
+          <Route path="*" element={<Error/>} />
         </Routes>
       </BrowserRouter>
     </>
