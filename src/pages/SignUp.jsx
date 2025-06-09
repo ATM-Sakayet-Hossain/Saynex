@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
   const [userData, setUserData] = useState({
@@ -7,8 +8,22 @@ const SignUp = () => {
     userEmail: "",
     UserPassword: "",
   });
+  const auth = getAuth();
 
+  // console.log(userData);
   const handleSubmit = (e) => {
+    // e.preventDefault();
+    createUserWithEmailAndPassword(auth, userEmail, UserPassword)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
     console.log(userData);
   };
 
@@ -48,7 +63,10 @@ const SignUp = () => {
             </label>
             <input
               onChange={(e) =>
-                setUserData((prev) => ({ ...prev, userFullName: e.target.value }))
+                setUserData((prev) => ({
+                  ...prev,
+                  userFullName: e.target.value,
+                }))
               }
               type="text"
               placeholder="Your Full Name"
@@ -62,7 +80,10 @@ const SignUp = () => {
             </label>
             <input
               onChange={(e) =>
-                setUserData((prev) => ({ ...prev, UserPassword: e.target.value }))
+                setUserData((prev) => ({
+                  ...prev,
+                  UserPassword: e.target.value,
+                }))
               }
               type="password"
               placeholder="••••••••"
