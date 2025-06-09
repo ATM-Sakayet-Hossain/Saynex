@@ -1,34 +1,64 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  getAuth,
+  updateProfile,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
 
 const SignUp = () => {
+  const navigate = useNavigate()
   const [userData, setUserData] = useState({
-    userFullName: "",
-    userEmail: "",
-    UserPassword: "",
+    fullName: "",
+    email: "",
+    password: "",
   });
   const auth = getAuth();
 
-  // console.log(userData);
   const handleSubmit = (e) => {
-    // e.preventDefault();
-    createUserWithEmailAndPassword(auth, userEmail, UserPassword)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        // ...
+    // console.log(userData);
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, userData.email, userData.password)
+      .then((res) => {
+        updateProfile(auth.currentUser, {
+          displayName: userData.fullName,
+          photoURL: "/default.png",
+        })
+          .then(() => {
+            sendEmailVerification(auth.currentUser).then(() => {
+              toast.success("Registration Successfull, Please verify your Email");
+              setTimeout(()=>{
+                navigate("/login")
+              }, 1000);
+            });
+          })
+          .catch((error) => {});
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+        if (error.code === "auth/invalid-email") {
+          toast.error("Please type a Valid Email!");
+        }
+        if (error.code === "auth/missing-email") {
+          toast.error("Please type your Email!");
+        }
+        if (error.code === "auth/missing-password") {
+          toast.error("Please type your Password!");
+        }
+        if (error.code === "auth/weak-password") {
+          toast.error("Password should be at least 6 characters!");
+        }
+        if (error.code === "auth/email-already-in-use") {
+          toast.error("Email already exist!");
+        }
       });
     console.log(userData);
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen from-[#e0f7ff] to-[#ffffff]">
+      <ToastContainer position="top-right" theme="light" />
       <div className="w-full max-w-lg bg-white shadow-xl rounded-2xl px-8 py-10">
         <div className=" text-center mb-8">
           <div className="inline-block bg-[#0275a6] text-white text-xl font-bold py-2 px-6 rounded-full mb-4">
@@ -49,7 +79,7 @@ const SignUp = () => {
             </label>
             <input
               onChange={(e) =>
-                setUserData((prev) => ({ ...prev, userEmail: e.target.value }))
+                setUserData((prev) => ({ ...prev, email: e.target.value }))
               }
               type="email"
               placeholder="you@saynex.com"
@@ -65,7 +95,7 @@ const SignUp = () => {
               onChange={(e) =>
                 setUserData((prev) => ({
                   ...prev,
-                  userFullName: e.target.value,
+                  fullName: e.target.value,
                 }))
               }
               type="text"
@@ -82,7 +112,7 @@ const SignUp = () => {
               onChange={(e) =>
                 setUserData((prev) => ({
                   ...prev,
-                  UserPassword: e.target.value,
+                  password: e.target.value,
                 }))
               }
               type="password"
