@@ -9,7 +9,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 
 const SignUp = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     fullName: "",
     email: "",
@@ -28,9 +28,11 @@ const SignUp = () => {
         })
           .then(() => {
             sendEmailVerification(auth.currentUser).then(() => {
-              toast.success("Registration Successfull, Please verify your Email");
-              setTimeout(()=>{
-                navigate("/login")
+              toast.success(
+                "Registration Successfull, Please verify your Email"
+              );
+              setTimeout(() => {
+                navigate("/");
               }, 1000);
             });
           })
@@ -53,7 +55,6 @@ const SignUp = () => {
           toast.error("Email already exist!");
         }
       });
-    console.log(userData);
   };
 
   return (
