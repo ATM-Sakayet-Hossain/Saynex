@@ -7,7 +7,7 @@ import ForgotPassword from "./pages/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword"
 import Home from "./pages/Home";
 import Error from "./pages/Error";
-import dbConfig from '../FirebaseConfig.js'
+
 
 function App() {
   return (
