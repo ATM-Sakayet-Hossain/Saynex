@@ -74,9 +74,12 @@ const SignUp = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-black mb-1 translate-y-3 bg-white w-26 m-auto">
-              Email Address
+          <div className="input flex flex-col static">
+            <label
+              htmlFor="input"
+              className="text-blue-500 text-xs font-semibold relative top-2 ml-[7px] px-[3px] bg-white w-fit"
+            >
+              Email Address:
             </label>
             <input
               onChange={(e) =>
@@ -88,9 +91,13 @@ const SignUp = () => {
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-black mb-1 translate-y-3 bg-white w-26 m-auto">
-              Full Name
+          <div className="input flex flex-col static">
+            
+            <label
+              htmlFor="input"
+              className="text-blue-500 text-xs font-semibold relative top-2 ml-[7px] px-[3px] bg-white w-fit"
+            >
+              Full Name:
             </label>
             <input
               onChange={(e) =>
@@ -105,9 +112,13 @@ const SignUp = () => {
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-black mb-1 translate-y-3 bg-white w-26 m-auto">
-              Password
+          <div className="input flex flex-col static">
+            
+            <label
+              htmlFor="input"
+              className="text-blue-500 text-xs font-semibold relative top-2 ml-[7px] px-[3px] bg-white w-fit"
+            >
+              Password:
             </label>
             <input
               onChange={(e) =>
