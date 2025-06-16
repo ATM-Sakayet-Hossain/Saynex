@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { GoLock } from "react-icons/go";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
