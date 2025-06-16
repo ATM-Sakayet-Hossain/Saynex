@@ -2,12 +2,14 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { GoLock } from "react-icons/go";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
+    const [isShow, setIsShow] = useState(false)
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -80,12 +82,13 @@ const Login = () => {
                   setUserData((user) => ({ ...user, password: e.target.value }))
                 }
                 className="pl-2 text-sm w-full outline-none"
-                type="password"
+                type={isShow ? "password" : "text"}
                 id="password"
                 value={userData.password}
                 placeholder="••••••••"
               />
-              <MdOutlineRemoveRedEye />
+              {isShow ? <IoEyeOffOutline onClick={()=> setIsShow(false)} /> : <IoEyeOutline onClick={()=> setIsShow(true)} />
+              }
             </div>
           </div>
           <div className="flex items-center justify-between mb-4">
