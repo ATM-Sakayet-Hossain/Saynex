@@ -21,7 +21,7 @@ const Login = () => {
       .then((user) => {
         toast.success("Login Successfull");
         setTimeout(() => {
-          navigate("/home")
+          navigate("/")
         }, 1000);
       })
       .catch((error) => {
