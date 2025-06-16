@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
-    const [isShow, setIsShow] = useState(false)
+    const [isShow, setIsShow] = useState(true)
   const [userData, setUserData] = useState({
     email: "",
     password: "",
