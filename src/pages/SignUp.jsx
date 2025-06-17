@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   getAuth,
   updateProfile,
@@ -7,10 +7,11 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  
+  const userInfo = useSelector((state) => state.userData.user);
   const [userData, setUserData] = useState({
     fullName: "",
     email: "",
@@ -57,7 +58,9 @@ const SignUp = () => {
         }
       });
   };
-
+  if (userInfo) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="flex items-center justify-center min-h-screen from-[#e0f7ff] to-[#ffffff]">
       <ToastContainer position="top-right" theme="light" />
@@ -93,7 +96,6 @@ const SignUp = () => {
           </div>
 
           <div className="input flex flex-col static">
-            
             <label
               htmlFor="input"
               className="text-blue-500 text-xs font-semibold relative top-2 ml-[7px] px-[3px] bg-white w-fit"
@@ -114,7 +116,6 @@ const SignUp = () => {
           </div>
 
           <div className="input flex flex-col static">
-            
             <label
               htmlFor="input"
               className="text-blue-500 text-xs font-semibold relative top-2 ml-[7px] px-[3px] bg-white w-fit"

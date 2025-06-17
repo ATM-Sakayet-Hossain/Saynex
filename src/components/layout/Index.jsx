@@ -5,8 +5,11 @@ import { useSelector } from 'react-redux';
 
 const Layout = () => {
     const userData = useSelector((state) => state.userData.user);
+    // Accessing user data from Redux store
+    // Check if userData is null or undefined
     if (!userData) {
         return <Navigate to="/login" />
+        // Redirect to login if user is not authenticated
     }
   return (
     <div className='flex'>

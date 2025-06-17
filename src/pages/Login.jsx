@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { loggedUser } from "../../store/authSlice";
 
 const Login = () => {
-  // const userInfo = useSelector((state) => state.userData.user);
+  const userInfo = useSelector((state) => state.userData.user);
   const navigate = useNavigate();
   const disptch = useDispatch();
   const [isShow, setIsShow] = useState(true);
@@ -48,9 +48,9 @@ const Login = () => {
       });
   };
 
-  // if (userInfo) {
-  //   return <Navigate to="/" />;
-  // }
+  if (userInfo) {
+    return <Navigate to="/" />;
+  }
 
 
   return (
