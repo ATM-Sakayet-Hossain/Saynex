@@ -36,14 +36,14 @@ const Navbar = () => {
             <div className="flex gap-3 items-center">
               <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-blue-400 group-hover:border-white ">
                 <img
-                  src={userData.photoURL || "/default.png"} // Default profile picture
+                  src={userData?.photoURL || "/default.png"}
                   alt="PP image"
                   className="w-full"
                 />
               </div>
               <div>
                 <h3 className="font-inter font-semibold text-lg group-hover:text-white">
-                  {userData.displayName || "User Name"}
+                  {userData?.displayName || "User Name"}
                   {/* Default Name */}
                 </h3>
                 <p className="font-inter font-normal text-sm group-hover:text-white">
