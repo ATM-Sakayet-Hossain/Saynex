@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
-    const [isShow, setIsShow] = useState(true)
+  const [isShow, setIsShow] = useState(true);
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -21,7 +21,7 @@ const Login = () => {
       .then((user) => {
         toast.success("Login Successfull");
         setTimeout(() => {
-          navigate("/")
+          navigate("/");
         }, 1000);
       })
       .catch((error) => {
@@ -86,8 +86,11 @@ const Login = () => {
                 value={userData.password}
                 placeholder="••••••••"
               />
-              {isShow ? <IoEyeOffOutline onClick={()=> setIsShow(false)} /> : <IoEyeOutline onClick={()=> setIsShow(true)} />
-              }
+              {isShow ? (
+                <IoEyeOffOutline onClick={() => setIsShow(false)} />
+              ) : (
+                <IoEyeOutline onClick={() => setIsShow(true)} />
+              )}
             </div>
           </div>
           <div className="flex items-center justify-between mb-4">
