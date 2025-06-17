@@ -3,11 +3,15 @@ import React, { useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { GoLock } from "react-icons/go";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { loggedUser } from "../../store/authSlice";
 
 const Login = () => {
+  // const userInfo = useSelector((state) => state.userData.user);
   const navigate = useNavigate();
+  const disptch = useDispatch();
   const [isShow, setIsShow] = useState(true);
   const [userData, setUserData] = useState({
     email: "",
@@ -18,11 +22,18 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, userData.email, userData.password)
-      .then((user) => {
-        toast.success("Login Successfull");
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
+      .then((res) => {
+        if (!res.user.emailVerified) {
+          toast.error("Please verify your Email!");
+        } else {
+          disptch(loggedUser(res.user));
+          toast.success("Login Successfull");
+          console.log(res.user);
+          
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        }
       })
       .catch((error) => {
         if (error.code === "auth/invalid-email") {
@@ -36,6 +47,12 @@ const Login = () => {
         }
       });
   };
+
+  // if (userInfo) {
+  //   return <Navigate to="/" />;
+  // }
+
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <ToastContainer position="top-right" theme="light" />
@@ -57,7 +74,7 @@ const Login = () => {
               <BsPerson />
               <input
                 onChange={(e) => {
-                  setUserData((user) => ({ ...user, email: e.target.value }));
+                  setUserData((prev) => ({ ...prev, email: e.target.value }));
                 }}
                 className="pl-2 text-sm w-full outline-none"
                 type="text"
@@ -78,7 +95,7 @@ const Login = () => {
               <GoLock />
               <input
                 onChange={(e) =>
-                  setUserData((user) => ({ ...user, password: e.target.value }))
+                  setUserData((Prev) => ({ ...Prev, password: e.target.value }))
                 }
                 className="pl-2 text-sm w-full outline-none"
                 type={isShow ? "password" : "text"}
