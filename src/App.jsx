@@ -7,6 +7,8 @@ import ForgotPassword from "./pages/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword"
 import Home from "./pages/Home";
 import Error from "./pages/Error";
+import Group from "./pages/Group";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/" element={<Layout/>} >
             <Route index element={<Home/>} />
+            <Route path="/group" element={<Group />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="*" element={<Error/>} />
         </Routes>
