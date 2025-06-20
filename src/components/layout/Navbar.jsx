@@ -3,11 +3,16 @@ import { CiChat1 } from "react-icons/ci";
 import { GrGroup } from "react-icons/gr";
 import { IoIosContact } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { loggedUser } from "../../../store/authSlice";
 
 const Navbar = () => {
   const userData = useSelector((state) => state.userData.user);
   const disptch = useDispatch();
+
+  const handellogout = () => {
+    disptch(loggedUser(null));
+  }
 
   return (
     <>
@@ -55,7 +60,7 @@ const Navbar = () => {
               </div>
             </div>
           </Link>
-          <button className="text-center py-3 px-6 text-black hover:text-white hover:bg-blue-400 text-xl font-semibold font-workSans rounded-sm gap-3 transition-all cursor-pointer">
+          <button onClick={handellogout} className="text-center py-3 px-6 text-black hover:text-white hover:bg-blue-400 text-xl font-semibold font-workSans rounded-sm gap-3 transition-all cursor-pointer">
             Logout
           </button>
         </div>
