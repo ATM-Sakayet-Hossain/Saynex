@@ -26,11 +26,10 @@ const Login = () => {
         if (!res.user.emailVerified) {
           toast.error("Please verify your Email!");
         } else {
-          disptch(loggedUser(res.user));
           toast.success("Login Successfull");
           console.log(res.user);
-          
           setTimeout(() => {
+            disptch(loggedUser(res.user));
             navigate("/");
           }, 2000);
         }
