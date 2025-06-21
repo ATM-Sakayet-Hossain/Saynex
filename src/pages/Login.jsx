@@ -27,7 +27,6 @@ const Login = () => {
           toast.error("Please verify your Email!");
         } else {
           toast.success("Login Successfull");
-          console.log(res.user);
           setTimeout(() => {
             disptch(loggedUser(res.user));
             navigate("/");

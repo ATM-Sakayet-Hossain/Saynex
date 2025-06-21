@@ -1,33 +1,39 @@
-import { getDatabase, ref, set } from "firebase/database";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getAuth, updateProfile } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import { loggedUser } from "../../store/authSlice";
 
 const Profile = () => {
+  const auth = getAuth();
   const userData = useSelector((state) => state.userData.user);
   const [isEdit, setIsEdit] = useState(false);
+  const disptch = useDispatch();
   const [editData, setEditData] = useState({
-    photoURL:"",
+    photoURL: "",
     displayName: "",
-  })
-  const db = getDatabase();
+  });
   const handelupdate = (e) => {
     e.preventDefault();
-    if (editData.photoURL || editData.displayName) {
-      const updatedData = {
-        ...userData,
-        photoURL: editData.photoURL || userData.photoURL,
-        displayName: editData.displayName || userData.displayName,
-      };
-      // Here you would typically dispatch an action to update the user data in your store
-      console.log("Updated User Data:", updatedData);
-      setIsEdit(false);
-    } else {
-      alert("Please fill at least one field to update.");
-    }
+    console.log(editData);
+    updateProfile(auth.currentUser, {
+      displayName: editData.displayName || userData.displayName,
+      photoURL: editData.photoURL || userData.photoURL,
+    })
+      .then(() => {
+        // Profile updated successfully!
+        disptch(loggedUser(auth.currentUser));
+        setIsEdit(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        // An error occurred
+        toast.error(error);
+      });
   };
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-100 to-blue-300 flex items-center justify-center">
+      <ToastContainer position="top-right" theme="light" />
       <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md flex flex-col items-center">
         <img
           src={userData?.photoURL || "/Profile.jpg"}
@@ -49,10 +55,6 @@ const Profile = () => {
             <span className="font-medium">
               {userData?.phoneNumber || "+880 0961300000"}
             </span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">CreatedAt:</span>
-            <span className="font-medium">{userData?.createdAt || "null"}</span>
           </div>
         </div>
         <div>
@@ -84,13 +86,18 @@ const Profile = () => {
                   Profile Picture URL:
                 </label>
                 <input
-                onChange={(e) => setEditData((prev) => ({ ...prev, photoURL: e.target.value }))}
+                  onChange={(e) =>
+                    setEditData((prev) => ({
+                      ...prev,
+                      photoURL: e.target.value,
+                    }))
+                  }
                   type="text"
                   placeholder="https://example.com/profile.jpg"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
-              <div className="input flex flex-col static pb-4">
+              <div className="input flex flex-col static mb-4">
                 <label
                   htmlFor="input"
                   className="text-blue-500 text-xs font-semibold relative top-2 ml-[7px] px-[3px] bg-white w-fit"
@@ -98,14 +105,22 @@ const Profile = () => {
                   Update Name:
                 </label>
                 <input
-                onChange={(e) => setEditData((prev) => ({ ...prev, displayName: e.target.value }))}
+                  onChange={(e) =>
+                    setEditData((prev) => ({
+                      ...prev,
+                      displayName: e.target.value,
+                    }))
+                  }
                   type="text"
                   placeholder="Your Full Name"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
               <div className="flex gap-2 justify-between">
-                <button onChange={handelupdate} className="w-full bg-green-400 text-center py-3 px-6 text-black hover:text-white hover:bg-blue-400 text-xl font-semibold font-workSans rounded-sm gap-3 transition-all cursor-pointer">
+                <button
+                  onClick={handelupdate}
+                  className="w-full bg-green-400 text-center py-3 px-6 text-black hover:text-white hover:bg-blue-400 text-xl font-semibold font-workSans rounded-sm gap-3 transition-all cursor-pointer"
+                >
                   Update
                 </button>
                 <button
