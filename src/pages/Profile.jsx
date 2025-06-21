@@ -15,7 +15,6 @@ const Profile = () => {
   });
   const handelupdate = (e) => {
     e.preventDefault();
-    console.log(editData);
     updateProfile(auth.currentUser, {
       displayName: editData.displayName || userData.displayName,
       photoURL: editData.photoURL || userData.photoURL,

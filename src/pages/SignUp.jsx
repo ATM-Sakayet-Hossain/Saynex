@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { getDatabase, ref, set } from "firebase/database";
 import {
   getAuth,
   updateProfile,
@@ -18,6 +19,7 @@ const SignUp = () => {
     password: "",
   });
   const auth = getAuth();
+  const db = getDatabase();
 
   const handleSubmit = (e) => {
     // console.log(userData);
@@ -30,6 +32,11 @@ const SignUp = () => {
         })
           .then(() => {
             sendEmailVerification(auth.currentUser).then(() => {
+              set(ref(db, "users/" + auth.currentUser.uid), {
+                username: auth.currentUser.displayName,
+                email: auth.currentUser.email,
+                profile_picture: auth.currentUser.photoURL,
+              });
               toast.success(
                 "Registration Successfull, Please verify your Email"
               );
