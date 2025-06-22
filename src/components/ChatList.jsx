@@ -4,23 +4,27 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { CiSearch } from "react-icons/ci";
 import UserChat from "./UserChat";
 import UserList from "./UserList";
+import { useSelector } from "react-redux";
+import { IoThermometerSharp } from "react-icons/io5";
 
 const ChatList = () => {
-  const db = getDatabase();
   const [modal, setModal] = useState(false);
   const [userList, setUserList] = useState([]);
+  const db = getDatabase();
+  const userInfo = useSelector((state) => state.userData.user);
 
   useEffect(() => {
-    const arr =[];
+    let arr = [];
     onValue(ref(db, "users/"), (snapshot) => {
-      snapshot.forEach((item) => {
-        arr.push({...item.val(), id: item.key});
+      snapshot.forEach((items) => {
+        if (items.key !== userInfo.uid) {
+          arr.push({ ...items.val(), id: items.key });
+        }
       });
       setUserList(arr);
     });
-  });
-  console.log("userList", userList);
-  
+  }, []);
+
   return (
     <>
       <div className="w-xl flex flex-col pt-12 pl-5 truncate">
@@ -56,8 +60,8 @@ const ChatList = () => {
         </div>
         {modal && (
           <div className="fixed top-0 left-0 flex items-center justify-center h-screen w-full z-50 bg-[#dae1efb5] ">
-            <div className="bg-white p-4 rounded-lg shadow-lg w-100 h-2/3 overflow-y-auto scrollbar-hide">
-              <div className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 shadow-sm w-full">
+            <div className="bg-white p-4 rounded-lg shadow-lg h-3/5 overflow-hidden">
+              <div className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 mb-4 shadow-sm w-full">
                 <CiSearch className="text-gray-500 text-[20px] mr-2" />
                 <input
                   type="text"
@@ -65,8 +69,10 @@ const ChatList = () => {
                   className="w-full bg-transparent focus:outline-none text-sm text-gray-700"
                 />
               </div>
-              <div>
-                <UserList />
+              <div className="w-sm h-full overflow-y-auto scrollbar-hide">
+                {userList.map((item) => (
+                  <UserList key={item.id} data={item} />
+                ))}
               </div>
             </div>
           </div>

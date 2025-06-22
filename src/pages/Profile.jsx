@@ -13,6 +13,7 @@ const Profile = () => {
     photoURL: "",
     displayName: "",
   });
+
   const handelupdate = (e) => {
     e.preventDefault();
     updateProfile(auth.currentUser, {
@@ -22,6 +23,11 @@ const Profile = () => {
       .then(() => {
         // Profile updated successfully!
         disptch(loggedUser(auth.currentUser));
+        update(ref(db, "users/" + userData.uid), {
+          username: editData.displayName || userData.displayName,
+          profile_picture: editData.photoURL || userData.photoURL,
+          
+        });
         setIsEdit(false);
         window.location.reload();
       })
@@ -30,6 +36,8 @@ const Profile = () => {
         toast.error(error);
       });
   };
+  console.log(userData);
+  
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-100 to-blue-300 flex items-center justify-center">
       <ToastContainer position="top-right" theme="light" />
