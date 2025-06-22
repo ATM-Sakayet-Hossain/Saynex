@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAuth, updateProfile } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import { loggedUser } from "../../store/authSlice";
+import { getDatabase, ref, update } from "firebase/database";
 
 const Profile = () => {
   const auth = getAuth();
+  const db = getDatabase();
   const userData = useSelector((state) => state.userData.user);
   const [isEdit, setIsEdit] = useState(false);
   const disptch = useDispatch();
@@ -36,7 +38,11 @@ const Profile = () => {
         toast.error(error);
       });
   };
-  console.log(userData);
+  window.addEventListener("mousedown", (e) => {
+    if (isEdit && !e.target.closest(".bg-white")) {
+      setIsEdit(false);
+    }
+  });
   
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-100 to-blue-300 flex items-center justify-center">

@@ -25,7 +25,7 @@ const SignUp = () => {
     // console.log(userData);
     e.preventDefault();
     createUserWithEmailAndPassword(auth, userData.email, userData.password)
-      .then((res) => {
+      .then(() => {
         updateProfile(auth.currentUser, {
           displayName: userData.fullName,
           photoURL: "/default.png",
@@ -45,7 +45,6 @@ const SignUp = () => {
               }, 1000);
             });
           })
-          .catch((error) => {});
       })
       .catch((error) => {
         if (error.code === "auth/invalid-email") {

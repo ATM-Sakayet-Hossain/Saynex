@@ -5,7 +5,6 @@ import { CiSearch } from "react-icons/ci";
 import UserChat from "./UserChat";
 import UserList from "./UserList";
 import { useSelector } from "react-redux";
-import { IoThermometerSharp } from "react-icons/io5";
 
 const ChatList = () => {
   const [modal, setModal] = useState(false);
@@ -23,7 +22,12 @@ const ChatList = () => {
       });
       setUserList(arr);
     });
-  }, []);
+  }, [db, userInfo.uid]);
+  window.addEventListener("mousedown", (e) => {
+    if (modal && !e.target.closest(".bg-white")) {
+      setModal(false);
+    }
+  });
 
   return (
     <>
