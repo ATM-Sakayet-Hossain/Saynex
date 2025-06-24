@@ -41,11 +41,11 @@ const UserList = ({ data }) => {
       </div>
       {
         friendList.includes(userInfo.uid + data.id) || friendList.includes(data.id + userInfo.uid) ? (
-          <button disabled className="px-6 py-2 rounded-lg bg-gray-400 font-inter font-normal text-lg group-hover:text-white">
+          <button disabled className="px-6 py-2 rounded-lg bg-blue-400 font-inter font-normal text-lg group-hover:text-white group-hover:bg-green-400">
             Friend
           </button>
         ) : (
-          <button onClick={handleAdd} className="px-6 py-2 rounded-lg bg-blue-400 font-inter font-normal text-lg group-hover:text-white">
+          <button onClick={handleAdd} className="px-6 py-2 rounded-lg bg-blue-400 font-inter font-normal text-lg group-hover:text-white group-hover:bg-green-400">
             Add
           </button>
         )

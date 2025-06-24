@@ -7,9 +7,10 @@ import UserList from "./UserList";
 import { useSelector } from "react-redux";
 
 const ChatList = () => {
+  const db = getDatabase();
   const [modal, setModal] = useState(false);
   const [userList, setUserList] = useState([]);
-  const db = getDatabase();
+  const [friendList, setFriendList] = useState([]);
   const userInfo = useSelector((state) => state.userData.user);
 
   useEffect(() => {
@@ -28,6 +29,15 @@ const ChatList = () => {
       setModal(false);
     }
   });
+  useEffect(() => {
+    onValue(ref(db, "friendList"), (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push({...item.val(), id: item.key});
+      });
+      setFriendList(arr);
+    });
+  }, []);
 
   return (
     <>
@@ -52,15 +62,28 @@ const ChatList = () => {
           </div>
         </div>
         <div className="pt-2 overflow-y-auto mt-2 h-screen scrollbar-none">
-          <UserChat path="/" image="/unnamed.jpg" name="ATM Sakayet Hossain">
-            Love you.....
-          </UserChat>
-          <UserChat path="/" image="/MG_0197.jpg" name="ATM Sakayet Hossain">
-            miss you.....
-          </UserChat>
-          <UserChat path="/" image="/unnamed.jpg" name="ATM Sakayet Hossain">
-            bye
-          </UserChat>
+          {
+            friendList.map((item) =>  item.creatorID == userInfo.uid ? (
+              <UserChat
+                key={item.id}
+                path={`/chat/${item.participentID}`}
+                image={item.participentAvatar}
+                name={item.participentName}
+              >
+                {item.participentName} is now your friend.
+              </UserChat>
+            )
+            : (
+              <UserChat
+                key={item.id}
+                path={item.creatorID}
+                image={item.creatorAvatar}
+                name={item.creatorName}
+              >
+                {item.creatorName} is now your friend.
+              </UserChat>
+            ))
+          }
         </div>
         {modal && (
           <div className="fixed top-0 left-0 flex items-center justify-center h-screen w-full z-50 bg-[#dae1efb5] ">
