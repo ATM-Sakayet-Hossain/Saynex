@@ -64,7 +64,7 @@ const ChatList = () => {
         </div>
         {modal && (
           <div className="fixed top-0 left-0 flex items-center justify-center h-screen w-full z-50 bg-[#dae1efb5] ">
-            <div className="bg-white p-4 rounded-lg shadow-lg h-3/5 overflow-hidden">
+            <div className="bg-white p-4 rounded-lg shadow-lg h-6/10 overflow-hidden">
               <div className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 mb-4 shadow-sm w-full">
                 <CiSearch className="text-gray-500 text-[20px] mr-2" />
                 <input
