@@ -2,9 +2,9 @@ import { getDatabase, ref, onValue } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { CiSearch } from "react-icons/ci";
+import { useSelector } from "react-redux";
 import UserChat from "./UserChat";
 import UserList from "./UserList";
-import { useSelector } from "react-redux";
 
 const ChatList = () => {
   const db = getDatabase();
@@ -66,7 +66,7 @@ const ChatList = () => {
             friendList.map((item) =>  item.creatorID == userInfo.uid ? (
               <UserChat
                 key={item.id}
-                path={`/chat/${item.participentID}`}
+                path={item.participentID}
                 image={item.participentAvatar}
                 name={item.participentName}
               >
