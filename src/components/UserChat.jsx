@@ -28,7 +28,7 @@ const UserChat = ({image, name, id }) => {
         </div>
       </div>
       <p className="font-inter font-normal text-xs group-hover:text-white">
-        10:30 PM
+        11:30 PM
       </p>
     </div>
   );
