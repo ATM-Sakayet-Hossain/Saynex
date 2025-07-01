@@ -74,7 +74,7 @@ const ForgotPassword = () => {
         </form>
 
         <p className="text-sm text-center text-gray-500 mt-6">
-          Remember your password?{" "}
+          Remember your password?
           <Link to="/login" className="text-[#0275a6] hover:underline">
             Log in
           </Link>
