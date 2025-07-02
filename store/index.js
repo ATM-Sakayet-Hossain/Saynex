@@ -1,9 +1,11 @@
 
 import { configureStore } from '@reduxjs/toolkit'
-import authSlice  from './authSlice'
+import authSlice  from './slices/authSlice'
+import conversationSlice from './slices/conversationSlice'
 
 export default configureStore({
   reducer: {
-    userData: authSlice
+    userData: authSlice,
+    activeFriend: conversationSlice,
   },
 })

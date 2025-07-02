@@ -4,7 +4,7 @@ import { GrGroup } from "react-icons/gr";
 import { IoIosContact } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Link} from "react-router-dom";
-import { loggedUser } from "../../../store/authSlice";
+import { loggedUser } from "../../../store/slices/authSlice";
 
 const Navbar = () => {
   const userData = useSelector((state) => state.userData.user);

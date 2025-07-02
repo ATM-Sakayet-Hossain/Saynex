@@ -6,7 +6,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { loggedUser } from "../../store/authSlice";
+import { loggedUser } from "../../store/slices/authSlice";
 
 const Login = () => {
   const userInfo = useSelector((state) => state.userData.user);

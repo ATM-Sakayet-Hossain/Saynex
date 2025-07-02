@@ -34,6 +34,7 @@ const ChatList = () => {
       let arr = [];
       snapshot.forEach((item) => {
         arr.push({...item.val(), id: item.key});
+        
       });
       setFriendList(arr);
     });
@@ -97,9 +98,9 @@ const ChatList = () => {
                 />
               </div>
               <div className="w-sm h-full overflow-y-auto scrollbar-hide">
-                {userList.map((item) => (
+                {/* {userList.map((item) => (
                   <UserList key={item.id} data={item} />
-                ))}
+                ))} */}
               </div>
             </div>
           </div>

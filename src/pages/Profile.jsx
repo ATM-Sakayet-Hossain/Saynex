@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth, updateProfile } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
-import { loggedUser } from "../../store/authSlice";
+import { loggedUser } from "../../store/slices/authSlice";
 import { getDatabase, ref, update } from "firebase/database";
 
 const Profile = () => {

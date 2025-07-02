@@ -1,10 +1,17 @@
 import React, { Children } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { userConversation } from "../../store/slices/conversationSlice";
 
-const UserChat = ({ path, image, name, children }) => {
+const UserChat = ({image, name, id }) => {
+  const activeFriend = useSelector((state)=> state.activeFriend.friend)
+  const disptch = useDispatch();
+  const handelClick = () => {
+    disptch(userConversation({image, name, id}))
+  }
   return (
     <div
-      to={path}
+      onClick={handelClick}
       className="py-2 px-2 flex justify-between items-start group hover:bg-blue-400 duration-300 ease-in-out rounded-md"
     >
       <div className="flex gap-3 items-center">
@@ -16,7 +23,7 @@ const UserChat = ({ path, image, name, children }) => {
             {name}
           </h3>
           <p className="font-inter font-normal text-sm group-hover:text-white">
-            {children}
+            hello
           </p>
         </div>
       </div>
