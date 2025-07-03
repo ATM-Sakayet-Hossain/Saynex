@@ -33,8 +33,9 @@ const ChatList = () => {
     onValue(ref(db, "friendList"), (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        arr.push({...item.val(), id: item.key});
-        
+        if(item.val().participentID === userInfo.uid || item.val().creatorID === userInfo.uid ){
+          arr.push({...item.val(), id: item.key});
+        }
       });
       setFriendList(arr);
     });
