@@ -15,7 +15,7 @@ const ForgotPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     sendPasswordResetEmail(auth, userData.email)
-      .then((user) => {
+      .then(() => {
         toast.success("Sent reset link email!");
         setTimeout(() => {
           navigate("/");

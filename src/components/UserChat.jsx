@@ -1,14 +1,13 @@
 import React, { Children } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { userConversation } from "../../store/slices/conversationSlice";
 
-const UserChat = ({ id, image, name }) => {
+const UserChat = ({ id, image, name, children }) => {
   const activeFriend = useSelector((state)=> state.activeFriend.friend)
   const disptch = useDispatch();
   const handelClick = () => {
     if(activeFriend?.id !== id){
-      disptch(userConversation({image, name, id}))
+      disptch(userConversation({image, name, id, children}))
     }    
   }
   return (
@@ -25,7 +24,7 @@ const UserChat = ({ id, image, name }) => {
             {name}
           </h3>
           <p className="font-inter font-normal text-sm group-hover:text-white">
-            hello
+            {children}
           </p>
         </div>
       </div>
