@@ -68,9 +68,11 @@ const ChatList = () => {
             friendList.map((item) =>  item.creatorID == userInfo.uid ? (
               <UserChat
                 key={item.id}
-                path={item.participentID}
-                image={item.participentAvatar}
+                conVoID={item.id}
                 name={item.participentName}
+                image={item.participentAvatar}
+                id={item.participentID}
+                lastMessage={item.lastMessage}
               >
                 {item.participentName} is now your friend.
               </UserChat>
@@ -78,9 +80,11 @@ const ChatList = () => {
             : (
               <UserChat
                 key={item.id}
-                path={item.creatorID}
-                image={item.creatorAvatar}
+                conVoID={item.id}
                 name={item.creatorName}
+                image={item.creatorAvatar}
+                id={item.creatorID}
+                lastMessage={item.lastMessage}
               >
                 {item.creatorName} is now your friend.
               </UserChat>
@@ -99,9 +103,9 @@ const ChatList = () => {
                 />
               </div>
               <div className="w-sm h-full overflow-y-auto scrollbar-hide">
-                {/* {userList.map((item) => (
+                {userList.map((item) => (
                   <UserList key={item.id} data={item} />
-                ))} */}
+                ))}
               </div>
             </div>
           </div>

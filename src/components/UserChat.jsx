@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { userConversation } from "../../store/slices/conversationSlice";
 
-const UserChat = ({image, name, id }) => {
+const UserChat = ({ id, image, name }) => {
   const activeFriend = useSelector((state)=> state.activeFriend.friend)
   const disptch = useDispatch();
   const handelClick = () => {
-    disptch(userConversation({image, name, id}))
+    if(activeFriend?.id !== id)
+      disptch(userConversation({image, name, id}))
+    
   }
   return (
     <div
