@@ -3,18 +3,22 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { HiDotsVertical, HiPhone, HiVideoCamera } from "react-icons/hi";
 import { ImAttachment } from "react-icons/im";
 import { IoSend } from "react-icons/io5";
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 
 const ChatBox = () => {
+    const activeFriend = useSelector((state)=> state.activeFriend.friend)
+    console.log(activeFriend);
+    
   return (
     <div className="flex flex-col h-full w-full pt-12  bg-gray-100">
           <div className="flex items-center justify-between px-6 py-4 bg-gray-200 border-gray-700">
             <div className="flex space-x-6 items-center">
               <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-blue-400 ">
-                <img src="/Profile.jpg" alt="PP image" className="w-full" />
+                <img src={activeFriend.image} alt="PP image" className="w-full" />
               </div>
               <h2 className="text-xl font-semibold text-blue-600">
-                ATM Sakayet Hossain
+                {activeFriend.name}
               </h2>
             </div>
             <div className="flex space-x-4 text-blue-800 text-2xl">

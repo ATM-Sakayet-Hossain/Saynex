@@ -7,9 +7,9 @@ const UserChat = ({ id, image, name }) => {
   const activeFriend = useSelector((state)=> state.activeFriend.friend)
   const disptch = useDispatch();
   const handelClick = () => {
-    if(activeFriend?.id !== id)
+    if(activeFriend?.id !== id){
       disptch(userConversation({image, name, id}))
-    
+    }    
   }
   return (
     <div
