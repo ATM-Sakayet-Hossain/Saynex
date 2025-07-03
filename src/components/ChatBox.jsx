@@ -11,9 +11,9 @@ const ChatBox = () => {
   const activeFriend = useSelector((state) => state.activeFriend.friend);
   const userInfo = useSelector((state) => state.userData.user);
   const [chatContent, setChatContent] = useState("");
+  const [messages, setMessages] = useState([]);
   const db = getDatabase();
   const handelsend = () => {
-    console.log(chatContent);
     set(push(ref(db, "messages/")), {
       senderID: userInfo.uid,
       reciverID: activeFriend.id,
@@ -23,11 +23,21 @@ const ChatBox = () => {
 
   useEffect(() => {
     onValue(ref(db, "messages/"), (snapshot) => {
+      let arr = [];
       snapshot.forEach((item) => {
-        console.log(item.val());
-      })
+        if (
+          (item.val().reciverID === userInfo.uid ||
+            item.val().senderID === userInfo.uid) &
+          (item.val().reciverID === activeFriend.id ||
+            item.val().senderID === activeFriend.id)
+        ) {
+          arr.push({ ...item.val(), key: item.key });
+        }
+      });
+      setMessages(arr);
     });
-  });
+  }, [activeFriend]);
+
   return (
     <div className="flex flex-col h-full w-full pt-12  bg-gray-100">
       <div className="flex items-center justify-between px-6 py-4 bg-gray-200 border-gray-700">
@@ -47,16 +57,23 @@ const ChatBox = () => {
       </div>
       <div className="overflow-y-auto scrollbar-hide text-ellipsis my-4 flex-1">
         <div className="flex flex-col gap-5 pb-10 px-3">
-          <p className="px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-bl-none max-w-4/5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
-            praesentium molestiae dicta officiis voluptas similique doloribus
-            dolores provident deserunt atque!
-          </p>
-          <p className="px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-br-none ml-auto max-w-4/5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
-            praesentium molestiae dicta officiis voluptas similique doloribus
-            dolores provident deserunt atque!
-          </p>
+          {messages.map((item) =>
+            item.senderID === userInfo.uid ? (
+              <p
+                key={item.key}
+                className="px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-br-none ml-auto max-w-4/5"
+              >
+                {item.message}
+              </p>
+            ) : (
+              <p
+                key={item.key}
+                className="px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-bl-none max-w-4/5"
+              >
+                {item.message}
+              </p>
+            )
+          )}
         </div>
       </div>
       <div className="mt-auto">
@@ -71,6 +88,7 @@ const ChatBox = () => {
           </div>
           <input
             type="text"
+            value={chatContent}
             placeholder="Type a message..."
             className="flex-1 bg-transparent px-4 py-2 focus:outline-none "
             onChange={(e) => setChatContent(e.target.value)}
