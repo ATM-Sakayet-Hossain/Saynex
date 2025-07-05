@@ -8,6 +8,7 @@ const UserChat = ({ id, image, name, children }) => {
   const handelClick = () => {
     if(activeFriend?.id !== id){
       disptch(userConversation({image, name, id, children}))
+      
     }    
   }
   return (
