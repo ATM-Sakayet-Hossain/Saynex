@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import EmojiPicker from "emoji-picker-react";
 import { BsEmojiSmile } from "react-icons/bs";
 import { ImAttachment } from "react-icons/im";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HiDotsVertical, HiPhone, HiVideoCamera } from "react-icons/hi";
 import { getDatabase, onValue, push, ref, set } from "firebase/database";
 
@@ -13,6 +13,7 @@ const ChatBox = () => {
   const [chatContent, setChatContent] = useState("");
   const [messages, setMessages] = useState([]);
   const [emoji, setEmoji] = useState(false);
+  const emojiRef = useRef(null);
   const db = getDatabase();
   const handelsend = () => {
     set(push(ref(db, "messages/")), {
@@ -47,13 +48,23 @@ const ChatBox = () => {
       setMessages(arr);
     });
   }, [activeFriend]);
-  console.log(emoji);
 
-  // window.addEventListener("mousedown", (e) => {
-  //   if (emoji && !e.target.closest(".bg-white")) {
-  //     setEmoji(flase);
-  //   }
-  // });
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        emoji &&
+        emojiRef.current &&
+        !emojiRef.current.contains(event.target)
+      ) {
+        setEmoji(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [emoji]);
 
   return (
     <div className="flex flex-col h-full w-full pt-12  bg-gray-100">
@@ -93,18 +104,22 @@ const ChatBox = () => {
           )}
         </div>
       </div>
-      <div className="mt-auto">
+      <div className=" relative mt-auto">
         {emoji && (
-          <EmojiPicker
-            className="bg-transparent"
-            emojiStyle="google"
-            onEmojiClick={(i) => setChatContent((prev) => prev + i.emoji)}
-          />
+          <div ref={emojiRef} className="absolute bottom-20 left-4 z-10">
+            <EmojiPicker
+              emojiStyle="google"
+              onEmojiClick={(emojiData) => {
+                setChatContent((prev) => prev + emojiData.emoji);
+              }}
+            />
+          </div>
         )}
         <div className="flex items-center px-4 py-3 bg-gray-200 ">
           <div className="flex gap-2 text-xl">
             <ImAttachment className=" rotate-180" />
             <BsEmojiSmile
+              value={emoji}
               className=" text-xl text-brand cursor-pointer"
               onClick={() => setEmoji(!emoji)}
             />
