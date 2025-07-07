@@ -15,6 +15,14 @@ const UserList = ({ data }) => {
       participentName: data.username,
       participentID: data.id,
       participentAvatar: data.profile_picture,
+      lastMessage: "",
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }),
   });
   };
   useEffect(()=> {

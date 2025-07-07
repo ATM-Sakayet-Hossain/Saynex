@@ -5,7 +5,7 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { ImAttachment } from "react-icons/im";
 import React, { useEffect, useRef, useState } from "react";
 import { HiDotsVertical, HiPhone, HiVideoCamera } from "react-icons/hi";
-import { getDatabase, onValue, push, ref, set } from "firebase/database";
+import { getDatabase, onValue, push, ref, set, update } from "firebase/database";
 
 const ChatBox = () => {
   const activeFriend = useSelector((state) => state.activeFriend.friend);
@@ -14,9 +14,10 @@ const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [emoji, setEmoji] = useState(false);
   const emojiRef = useRef(null);
+  const chatboxRef = useRef(null);
   const db = getDatabase();
   const handelsend = () => {
-    set(push(ref(db, "messages/")), {
+    set(push(ref(db, "messages")), {
       senderID: userInfo.uid,
       reciverID: activeFriend.id,
       message: chatContent,
@@ -28,12 +29,21 @@ const ChatBox = () => {
         day: "2-digit",
       }),
     });
+    // Update the last message in the friend list
+    update(ref(db, "friendList/" + activeFriend.conVoID), {
+      lastMessage: chatContent,
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    });
+    // Clear the chat input
     setChatContent("");
     setEmoji(false);
   };
 
   useEffect(() => {
-    onValue(ref(db, "messages/"), (snapshot) => {
+    onValue(ref(db, "messages"), (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
         if (
@@ -49,6 +59,14 @@ const ChatBox = () => {
     });
   }, [activeFriend]);
 
+  // Scroll to the bottom of the chatbox when messages change
+  useEffect(() => {
+    if (chatboxRef.current) {
+      chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  // Close emoji picker on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -65,6 +83,8 @@ const ChatBox = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [emoji]);
+  
+  
 
   return (
     <div className="flex flex-col h-full w-full pt-12  bg-gray-100">

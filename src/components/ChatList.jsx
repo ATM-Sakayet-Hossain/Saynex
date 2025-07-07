@@ -13,6 +13,7 @@ const ChatList = () => {
   const [friendList, setFriendList] = useState([]);
   const userInfo = useSelector((state) => state.userData.user);
 
+  // Fetch user list
   useEffect(() => {
     let arr = [];
     onValue(ref(db, "users/"), (snapshot) => {
@@ -24,22 +25,28 @@ const ChatList = () => {
       setUserList(arr);
     });
   }, [db, userInfo.uid]);
-  window.addEventListener("mousedown", (e) => {
-    if (modal && !e.target.closest(".bg-white")) {
-      setModal(false);
-    }
-  });
+  // Fetch friend list
   useEffect(() => {
     onValue(ref(db, "friendList"), (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if(item.val().participentID === userInfo.uid || item.val().creatorID === userInfo.uid ){
-          arr.push({...item.val(), id: item.key});
+        if (
+          item.val().participentID === userInfo.uid ||
+          item.val().creatorID === userInfo.uid
+        ) {
+          arr.push({ ...item.val(), id: item.key });
         }
       });
       setFriendList(arr);
     });
   }, []);
+
+  // Close modal on outside click
+  window.addEventListener("mousedown", (e) => {
+    if (modal && !e.target.closest(".bg-white")) {
+      setModal(false);
+    }
+  });
 
   return (
     <>
@@ -64,8 +71,8 @@ const ChatList = () => {
           </div>
         </div>
         <div className="pt-2 overflow-y-auto mt-2 h-screen scrollbar-none">
-          {
-            friendList.map((item) =>  item.creatorID == userInfo.uid ? (
+          {friendList.map((item) =>
+            item.creatorID == userInfo.uid ? (
               <UserChat
                 key={item.id}
                 conVoID={item.id}
@@ -73,11 +80,11 @@ const ChatList = () => {
                 image={item.participentAvatar}
                 id={item.participentID}
                 lastMessage={item.lastMessage}
+                time={item.time}
               >
                 {item.participentName} is now your friend.
               </UserChat>
-            )
-            : (
+            ) : (
               <UserChat
                 key={item.id}
                 conVoID={item.id}
@@ -85,11 +92,12 @@ const ChatList = () => {
                 image={item.creatorAvatar}
                 id={item.creatorID}
                 lastMessage={item.lastMessage}
+                time={item.time}
               >
                 {item.creatorName} is now your friend.
               </UserChat>
-            ))
-          }
+            )
+          )}
         </div>
         {modal && (
           <div className="fixed top-0 left-0 flex items-center justify-center h-screen w-full z-50 bg-[#dae1efb5] ">
