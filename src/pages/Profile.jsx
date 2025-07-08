@@ -49,7 +49,7 @@ const Profile = () => {
       <ToastContainer position="top-right" theme="light" />
       <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md flex flex-col items-center">
         <img
-          src={userData?.photoURL || "/Profile.jpg"}
+          src={userData?.photoURL || "default.webp"}
           alt="Profile"
           className="w-32 h-32 rounded-full border-4 border-blue-400 shadow mb-4 object-cover"
         />

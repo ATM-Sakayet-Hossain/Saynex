@@ -53,7 +53,7 @@ const ChatList = () => {
       <div className="w-xl flex flex-col pt-12 pl-5 truncate">
         <div>
           <div className="flex justify-between items-center pb-4 pr-4">
-            <h2 className="text-2xl font-semibold">Chats</h2>
+            <h2 className="text-2xl font-semibold">Chats with Friends</h2>
             <button
               onClick={() => setModal(true)}
               className="text-gray-800 text-2xl py-3 px-3 rounded hover:bg-blue-400 hover:text-white "

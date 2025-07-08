@@ -28,7 +28,7 @@ const SignUp = () => {
       .then(() => {
         updateProfile(auth.currentUser, {
           displayName: userData.fullName,
-          photoURL: "/default.png",
+          photoURL: "/default.webp",
         })
           .then(() => {
             sendEmailVerification(auth.currentUser).then(() => {

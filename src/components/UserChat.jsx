@@ -25,7 +25,7 @@ const UserChat = ({
       className="py-2 px-2 flex justify-between items-start group hover:bg-blue-400 duration-300 ease-in-out rounded-md"
     >
       <div className="flex gap-3 items-center">
-        <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-blue-400 group-hover:border-white ">
+        <div className="w-11 h-11 rounded-full overflow-hidden border-2 flex items-center justify-center border-blue-400 group-hover:border-white ">
           <img src={image} alt="PP image" className="w-full" />
         </div>
         <div>
