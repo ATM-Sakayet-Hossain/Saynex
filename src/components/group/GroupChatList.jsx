@@ -24,10 +24,10 @@ const GroupChatList = () => {
           <div className="flex justify-between items-center pb-4 pr-4">
             <h2 className="text-2xl font-semibold">Chats with Group</h2>
             <button className="text-gray-800 text-2xl py-3 px-3 rounded hover:bg-blue-400 hover:text-white ">
-              <GrGroup onClick={setCreateGrpModel} />
+              <GrGroup onClick={() => setCreateGrpModel(true)} />
             </button>
             <button className="text-gray-800 text-2xl py-3 px-3 rounded hover:bg-blue-400 hover:text-white ">
-              <AiOutlineUsergroupAdd onClick={setCreateGrpModel} />
+              <AiOutlineUsergroupAdd onClick={() => setJoinModel(true)} />
             </button>
           </div>
           <div className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 shadow-sm w-full">
@@ -43,33 +43,32 @@ const GroupChatList = () => {
           <GroupChatItem />
         </div>
       </div>
-      {createGrpModel //create group
-       && (
+      {createGrpModel && ( //create group
         <div className="fixed top-0 left-0 flex items-center justify-center h-screen w-full z-50 bg-[#dae1efb5] ">
-          <div className="bg-white p-4 rounded-lg shadow-lg h-6/10 overflow-hidden">
+          <div className="bg-white p-4 rounded-lg shadow-lg h-1/5">
             <button
               className="w-8 h-8 flex justify-center items-center text-2xl rounded-2xl hover:bg-blue-400 px-2 hover:rounded-2xl hover:text-white "
               onClick={() => setCreateGrpModel(false)}
             >
               X
             </button>
-            <div className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 my-4 shadow-sm w-full">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full bg-transparent focus:outline-none text-sm text-gray-700"
-              />
-            </div>
-            <div className="w-sm h-full overflow-y-auto scrollbar-hide">
-              {/* {userList.map((item) => (
-                  <UserList key={item.id} data={item} />
-                ))} */}
+            <div className="h-20 w-sm flex flex-col items-center justify-center gap-3 my-4">
+              <div className="flex items-center bg-white border border-gray-300 rounded-md px-4 py-2 shadow-sm w-full">
+                <input
+                  type="text"
+                  placeholder="Create a Group"
+                  className="w-full bg-transparent focus:outline-none text-sm text-gray-700"
+                />
+              </div>
+              <button className="bg-green-400 px-10 py-2 rounded-2xl">
+                Create
+              </button>
             </div>
           </div>
         </div>
       )}
-      {joinModel //join friend protal
-       && (
+
+      {joinModel && ( //join friend protal
         <div className="fixed top-0 left-0 flex items-center justify-center h-screen w-full z-50 bg-[#dae1efb5] ">
           <div className="bg-white p-4 rounded-lg shadow-lg h-6/10 overflow-hidden">
             <button
