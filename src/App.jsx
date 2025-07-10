@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Error from "./pages/Error";
 import Group from "./pages/Group";
 import Profile from "./pages/Profile";
+import Contacts from "./pages/Contacts";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route index element={<Home/>} />
             <Route path="/group" element={<Group />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/contacts" element={<Contacts />} />
           </Route>
           <Route path="*" element={<Error/>} />
         </Routes>

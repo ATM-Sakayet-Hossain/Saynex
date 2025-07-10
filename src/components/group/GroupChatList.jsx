@@ -1,13 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineUserAdd, AiOutlineUsergroupAdd } from "react-icons/ai";
+import { getDatabase, onValue, push, ref, set } from "firebase/database";
 import { CiSearch } from "react-icons/ci";
 import GroupChatItem from "./GroupChatItem";
 import { GrGroup } from "react-icons/gr";
+import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
 
 const GroupChatList = () => {
+  const userInfo = useSelector((state) => state.userData.user);
   const [createGrpModel, setCreateGrpModel] = useState(false);
   const [joinModel, setJoinModel] = useState(false);
+  const [groupName, setGroupName] = useState("");
+  const [allGroups, setAllGroups] = useState({});
+  const [groupMembers, setGroupMembers] = useState([]);
 
+  const db = getDatabase();
+
+  const handelCreateGrp = () => {
+    if (!groupName) return toast("Group name is required.");
+    set(push(ref(db, "groups/")), {
+      groupName,
+      creatorName: userInfo.displayName,
+      creatorId: userInfo.uid,
+    });
+    setCreateGrpModel(false);
+    setGroupName("");
+  };
+
+  useEffect(() => {
+    onValue(ref(db, "groupMember"), (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        if (item.val().memberID === userInfo.uid) {
+          arr.push(item.val().gorupID);
+        }
+      });
+      setGroupMembers(arr);
+    });
+    onValue(ref(db, "groups"), (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push({ ...item.val(), id: item.key });
+      });
+      setAllGroups(arr);
+    });
+  }, []);
   // Close modal on outside click
   window.addEventListener("mousedown", (e) => {
     if (createGrpModel && !e.target.closest(".bg-white")) {
@@ -17,9 +55,11 @@ const GroupChatList = () => {
       setJoinModel(false);
     }
   });
+  
   return (
     <>
       <div className="w-md flex flex-col pt-12 pl-5 h-screen bg- truncate">
+        <ToastContainer position="top-right" theme="light" />
         <div>
           <div className="flex justify-between items-center pb-4 pr-4">
             <h2 className="text-2xl font-semibold">Chats with Group</h2>
@@ -40,7 +80,14 @@ const GroupChatList = () => {
           </div>
         </div>
         <div className="pt-2 mt-2 h-full overflow-y-auto scrollbar-none">
-          <GroupChatItem />
+          {/* {allGroups.map(
+            (item) =>
+              (item.creatorId === userInfo.uid ||
+                groupMembers.includes(item.id)) && (
+                <GroupChatItem key={item.id} data={item} />
+              )
+            )} */}
+          {/* <GroupChatItem /> */}
         </div>
       </div>
       {createGrpModel && ( //create group
@@ -58,9 +105,13 @@ const GroupChatList = () => {
                   type="text"
                   placeholder="Create a Group"
                   className="w-full bg-transparent focus:outline-none text-sm text-gray-700"
+                  onChange={(e) => setGroupName(e.target.value)}
                 />
               </div>
-              <button className="bg-green-400 px-10 py-2 rounded-2xl">
+              <button
+                onClick={handelCreateGrp}
+                className="bg-green-400 px-10 py-2 rounded-2xl"
+              >
                 Create
               </button>
             </div>
