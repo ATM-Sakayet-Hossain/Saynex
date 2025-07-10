@@ -12,7 +12,7 @@ const GroupChatList = () => {
   const [createGrpModel, setCreateGrpModel] = useState(false);
   const [joinModel, setJoinModel] = useState(false);
   const [groupName, setGroupName] = useState("");
-  const [allGroups, setAllGroups] = useState({});
+  const [allGroups, setAllGroups] = useState([]);
   const [groupMembers, setGroupMembers] = useState([]);
 
   const db = getDatabase();
@@ -80,14 +80,13 @@ const GroupChatList = () => {
           </div>
         </div>
         <div className="pt-2 mt-2 h-full overflow-y-auto scrollbar-none">
-          {/* {allGroups.map(
+          {allGroups.map(
             (item) =>
               (item.creatorId === userInfo.uid ||
                 groupMembers.includes(item.id)) && (
                 <GroupChatItem key={item.id} data={item} />
               )
-            )} */}
-          {/* <GroupChatItem /> */}
+            )}
         </div>
       </div>
       {createGrpModel && ( //create group

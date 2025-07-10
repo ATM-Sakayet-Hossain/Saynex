@@ -1,8 +1,8 @@
 import React from 'react'
 import { PiDotsThreeCircleVertical } from 'react-icons/pi'
 
-const GroupChatItem = (data) => {
-  // console.log(data);
+const GroupChatItem = ({data}) => {
+  console.log(data);
   
   return (
     <div
@@ -17,7 +17,7 @@ const GroupChatItem = (data) => {
             {data.groupName}
           </h3>
           <p className="font-inter font-normal text-sm group-hover:text-white">
-            User Name is now your friend.
+            {data.creatorName} has created this group.
           </p>
         </div>
       </div>
