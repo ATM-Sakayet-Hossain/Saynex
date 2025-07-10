@@ -2,15 +2,7 @@ import React, { Children } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userConversation } from "../../store/slices/conversationSlice";
 
-const UserChat = ({
-  id,
-  image,
-  name,
-  children,
-  conVoID,
-  lastMessage,
-  time,
-}) => {
+const UserChat = ({ id, image, name, children, conVoID, lastMessage, time}) => {
   const activeFriend = useSelector((state) => state.activeFriend.friend);
   const dispatch = useDispatch();
   const handelClick = () => {
