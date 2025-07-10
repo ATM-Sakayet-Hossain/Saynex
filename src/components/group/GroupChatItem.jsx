@@ -37,7 +37,6 @@ const GroupChatItem = ({ data }) => {
       setAddMemberModal(false);
     }
   });
-
   return (
     <>
       <div
