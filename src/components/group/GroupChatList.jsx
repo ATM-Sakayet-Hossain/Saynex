@@ -55,7 +55,7 @@ const GroupChatList = () => {
       setJoinModel(false);
     }
   });
-  
+
   return (
     <>
       <div className="w-xl flex flex-col pt-12 pl-5 h-screen bg- truncate">
@@ -86,7 +86,7 @@ const GroupChatList = () => {
                 groupMembers.includes(item.id)) && (
                 <GroupChatItem key={item.id} data={item} />
               )
-            )}
+          )}
         </div>
       </div>
       {createGrpModel && ( //create group
@@ -135,9 +135,9 @@ const GroupChatList = () => {
               />
             </div>
             <div className="w-sm h-full overflow-y-auto scrollbar-hide">
-              {/* {userList.map((item) => (
-                  <UserList key={item.id} data={item} />
-                ))} */}
+              {allGroups.map(
+                (item) => <GroupChatItem key={item.id} data={item} />
+              )}
             </div>
           </div>
         </div>
