@@ -86,7 +86,6 @@ const GroupChatBox = () => {
     };
   }, [emoji]);
 
-  console.log(activeGroup);
 
   return (
     <div className="flex flex-col h-full w-full pt-12  bg-gray-100">

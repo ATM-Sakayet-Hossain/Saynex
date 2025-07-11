@@ -32,9 +32,11 @@ const GroupChatList = () => {
     onValue(ref(db, "groupMember"), (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if (item.val().memberID === userInfo.uid) {
-          arr.push(item.val().gorupID);
+        item.forEach((data) => {
+          if (data.val().memberID === userInfo.uid) {
+          arr.push(data.val().gorupID);
         }
+        })
       });
       setGroupMembers(arr);
     });

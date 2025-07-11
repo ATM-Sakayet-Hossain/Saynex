@@ -5,7 +5,7 @@ const GroupAddFriendList = ({ name, avatar, id, groupData }) => {
   const [groupMember, setGroupMember] = useState([]);
   const db = getDatabase();
   const handelAddMember = () => {
-    set(push(ref(db, "groupMember")), { // "groupMember/" + groupData.id
+    set(push(ref(db, "groupMember/" + groupData.id)), { // "groupMember/" + groupData.id
       gorupID: groupData.id,
       memberID: id,
       memberName: name,
@@ -18,7 +18,7 @@ const GroupAddFriendList = ({ name, avatar, id, groupData }) => {
     });
   };
   useEffect(() => {
-    onValue(ref(db, "groupMember"), (snapshot) => { //"groupMember/" + groupData.id
+    onValue(ref(db, "groupMember/" + groupData.id), (snapshot) => { //"groupMember/" + groupData.id
       let arr = [];
       snapshot.forEach((item) => {
         arr.push(item.val().memberID);
@@ -29,7 +29,7 @@ const GroupAddFriendList = ({ name, avatar, id, groupData }) => {
 
   const isAdded = groupMember.includes(id);
   if (isAdded) return null;
-
+  
   return (
     <div className="py-2 px-2 flex justify-between items-center group hover:bg-blue-400 duration-300 ease-in-out rounded-md">
       <div className="flex gap-3 items-center">
