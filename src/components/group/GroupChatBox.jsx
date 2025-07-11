@@ -28,16 +28,14 @@ const GroupChatBox = () => {
       senderID: userInfo.uid,
       reciverID: activeGroup.id,
       message: chatContent,
+      senderName: userInfo.displayName,
       time: new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
       }),
     });
     // Update the last message in the friend list
-    update(ref(db, "groupMember"), {
+    update(ref(db, "groups/" + activeGroup.id), {
       lastMessage: chatContent,
       time: new Date().toLocaleTimeString([], {
         hour: "2-digit",
@@ -115,23 +113,19 @@ const GroupChatBox = () => {
             item.senderID === userInfo.uid ? (
               <p
                 key={item.key}
-                className="px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-br-none ml-auto max-w-4/5"
+                className="flex flex-col text-end px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-br-none ml-auto max-w-4/5"
               >
                 {item.message}
+                <span className="text-xs">{item.senderName}</span>
               </p>
             ) : (
-              <div className="px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-bl-none max-w-4/5">
-                <p
-                  key={item.key}
-                >
-                  {item.message}
-                </p>
-                <p
-                  key={item.key}
-                >
-                  {item.message}
-                </p>
-              </div>
+              <p
+                key={item.key}
+                className="flex flex-col text-start px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-bl-none max-w-4/5"
+              >
+                {item.message}
+                <span className="text-xs">{item.senderName}</span>
+              </p>
             )
           )}
         </div>

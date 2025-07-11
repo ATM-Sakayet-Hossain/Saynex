@@ -37,6 +37,8 @@ const GroupChatItem = ({ data }) => {
       setAddMemberModal(false);
     }
   });
+  console.log(data);
+
   return (
     <>
       <div
@@ -55,7 +57,14 @@ const GroupChatItem = ({ data }) => {
                 {data.groupName}
               </h3>
               <p className="font-inter font-normal text-sm group-hover:text-white">
-                {data.creatorName} has created this group.
+                {data.lastMessage
+                  ? data.lastMessage.length > 40
+                    ? data.lastMessage.substring(0, 35) + "..."
+                    : data.lastMessage
+                  : data.creatorName.length > 15
+                  ? data.creatorName.substring(0, 11) +
+                    "... has created this group."
+                  : `${data.creatorName} has created this group.`}
               </p>
             </div>
           </div>

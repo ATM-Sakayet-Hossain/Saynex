@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="h-screen py-8 px-4 shadow-xl flex flex-col w-sm bg-white">
+      <nav className="h-screen py-8 px-4 shadow-xl flex flex-col bg-white">
         <h1 className="text-4xl font-bold mx-auto">Saynex</h1>
         <div className="flex flex-col mt-20 gap-2">
           <Link
@@ -51,7 +51,11 @@ const Navbar = () => {
                 </div>
                 <div>
                   <h3 className="font-inter font-semibold text-lg group-hover:text-white">
-                    {userData?.displayName || "User Name"}
+                    {userData?.displayName
+                      ? (userData.displayName.length > 8
+                          ? userData.displayName.substring(0, 5) + "..."
+                          : userData.displayName)
+                      : "User Name"}
                   </h3>
                   <p className="font-inter font-normal text-sm group-hover:text-white">
                     Edit Profile
