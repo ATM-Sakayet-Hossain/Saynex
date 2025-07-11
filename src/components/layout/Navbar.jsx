@@ -52,8 +52,8 @@ const Navbar = () => {
                 <div>
                   <h3 className="font-inter font-semibold text-lg group-hover:text-white">
                     {userData?.displayName
-                      ? (userData.displayName.length > 8
-                          ? userData.displayName.substring(0, 5) + "..."
+                      ? (userData.displayName.length > 10
+                          ? userData.displayName.substring(0, 7) + "..."
                           : userData.displayName)
                       : "User Name"}
                   </h3>

@@ -58,7 +58,7 @@ const GroupChatList = () => {
   
   return (
     <>
-      <div className="w-lg flex flex-col pt-12 pl-5 h-screen bg- truncate">
+      <div className="w-xl flex flex-col pt-12 pl-5 h-screen bg- truncate">
         <ToastContainer position="top-right" theme="light" />
         <div>
           <div className="flex justify-between items-center pb-4 pr-4">
