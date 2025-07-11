@@ -1,6 +1,7 @@
 import React from "react";
 import GroupChatList from "../components/group/GroupChatList";
 import { useSelector } from "react-redux";
+import GroupChatBox from "../components/group/GroupChatBox";
 
 const Group = () => {
     const activeGroup = useSelector((state) => state.activeFriend.group);

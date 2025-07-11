@@ -5,11 +5,17 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { ImAttachment } from "react-icons/im";
 import React, { useEffect, useRef, useState } from "react";
 import { HiDotsVertical, HiPhone, HiVideoCamera } from "react-icons/hi";
-import { getDatabase, onValue, push, ref, set, update } from "firebase/database";
+import {
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  set,
+  update,
+} from "firebase/database";
 
-
-export const GroupChatBox = () => {
-  const activeGroup = useSelector((state) => state.activeFriend.friend);
+const GroupChatBox = () => {
+  const activeGroup = useSelector((state) => state.activeFriend.group);
   const userInfo = useSelector((state) => state.userData.user);
   const [chatContent, setChatContent] = useState("");
   const [messages, setMessages] = useState([]);
@@ -31,7 +37,7 @@ export const GroupChatBox = () => {
       }),
     });
     // Update the last message in the friend list
-    update(ref(db, "friendList/" + activeGroup.conVoID), {
+    update(ref(db, "groupMember"), {
       lastMessage: chatContent,
       time: new Date().toLocaleTimeString([], {
         hour: "2-digit",
@@ -48,10 +54,8 @@ export const GroupChatBox = () => {
       let arr = [];
       snapshot.forEach((item) => {
         if (
-          (item.val().reciverID === userInfo.uid ||
-            item.val().senderID === userInfo.uid) &
-          (item.val().reciverID === activeGroup.id ||
-            item.val().senderID === activeGroup.id)
+          item.val().reciverID === activeGroup.id ||
+          item.val().senderID === activeGroup.id
         ) {
           arr.push({ ...item.val(), key: item.key });
         }
@@ -66,7 +70,6 @@ export const GroupChatBox = () => {
       chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
     }
   }, [messages]);
-
   // Close emoji picker on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -84,15 +87,20 @@ export const GroupChatBox = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [emoji]);
+
+  console.log(activeGroup);
+
   return (
     <div className="flex flex-col h-full w-full pt-12  bg-gray-100">
       <div className="flex items-center justify-between px-6 py-4 bg-gray-200 border-gray-700">
         <div className="flex space-x-6 items-center">
-          <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-blue-400 ">
-            <img src={activeGroup.image} alt="PP image" className="w-full" />
+          <div className="w-11 h-11 rounded-full overflow-hidden border-2 bg-blue-950 flex items-center justify-center border-blue-400 group-hover:border-white ">
+            <p className="text-3xl font-bold text-white">
+              {activeGroup.groupName[0]}
+            </p>
           </div>
           <h2 className="text-xl font-semibold text-blue-600">
-            {activeGroup.name}
+            {activeGroup.groupName}
           </h2>
         </div>
         <div className="flex space-x-4 text-blue-800 text-2xl">
@@ -112,12 +120,18 @@ export const GroupChatBox = () => {
                 {item.message}
               </p>
             ) : (
-              <p
-                key={item.key}
-                className="px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-bl-none max-w-4/5"
-              >
-                {item.message}
-              </p>
+              <div className="px-4 py-2 bg-slate-200 w-fit text-primary rounded-xl rounded-bl-none max-w-4/5">
+                <p
+                  key={item.key}
+                >
+                  {item.message}
+                </p>
+                <p
+                  key={item.key}
+                >
+                  {item.message}
+                </p>
+              </div>
             )
           )}
         </div>
@@ -161,3 +175,5 @@ export const GroupChatBox = () => {
     </div>
   );
 };
+
+export default GroupChatBox;

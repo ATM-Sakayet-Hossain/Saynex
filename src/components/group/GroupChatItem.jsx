@@ -41,9 +41,9 @@ const GroupChatItem = ({ data }) => {
     <>
       <div
         onClick={handelClick}
-        className="flex items-center gap-4 my-4 cursor-pointer"
+        className="w-full flex items-center gap-4 my-4 cursor-pointer"
       >
-        <div className="py-2 px-2 flex justify-between items-center group hover:bg-blue-400 duration-300 ease-in-out rounded-md">
+        <div className="w-full py-2 px-2 flex items-center hover:bg-blue-400 duration-300 ease-in-out rounded-md">
           <div className="flex gap-3 items-center">
             <div className="w-11 h-11 rounded-full overflow-hidden border-2 bg-blue-950 flex items-center justify-center border-blue-400 group-hover:border-white ">
               <p className="text-3xl font-bold text-white">
