@@ -138,9 +138,9 @@ const GroupChatList = () => {
               />
             </div>
             <div className="w-sm h-full overflow-y-auto scrollbar-hide">
-              {/* {allGroups.map(
+              {allGroups.map(
                 (item) => <JoinGroup key={item.id} data={item} />
-              )} */}
+              )}
             </div>
           </div>
         </div>
