@@ -6,6 +6,7 @@ import GroupChatItem from "./GroupChatItem";
 import { GrGroup } from "react-icons/gr";
 import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import JoinGroup from "./JoinGroup";
 
 const GroupChatList = () => {
   const userInfo = useSelector((state) => state.userData.user);
@@ -137,9 +138,9 @@ const GroupChatList = () => {
               />
             </div>
             <div className="w-sm h-full overflow-y-auto scrollbar-hide">
-              {allGroups.map(
-                (item) => <GroupChatItem key={item.id} data={item} />
-              )}
+              {/* {allGroups.map(
+                (item) => <JoinGroup key={item.id} data={item} />
+              )} */}
             </div>
           </div>
         </div>
