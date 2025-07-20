@@ -1,36 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { PiDotsThreeCircleVertical } from "react-icons/pi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import GroupAddFriendList from "./GroupAddFriendList";
-import { getDatabase, onValue, ref } from "firebase/database";
-import { selectGroup } from "../../../store/slices/conversationSlice";
+import { getDatabase, onValue, push, ref, set } from "firebase/database";
+// import { selectGroup } from "../../../store/slices/conversationSlice";
 
 const JoinGroup = ({ data }) => {
   const userInfo = useSelector((state) => state.userData.user);
   const [addMemberModal, setAddMemberModal] = useState(false);
-  const [friendList, setFriendList] = useState([]);
-  const dispatch = useDispatch();
+  const [groupMember, setGroupMember] = useState([]);
   const db = getDatabase();
 
+  const handelJoin = () => {
+    set(push(ref(db, "groupMember/" + data.id)), {
+      gorupID: data.id,
+      memberID: userInfo.uid,
+      memberName: userInfo.displayName,
+      creatorId: data.creatorId,
+      memberAvatar: userInfo.photoURL,
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    });
+  };
+
   useEffect(() => {
-    onValue(ref(db, "friendList"), (snapshot) => {
+    onValue(ref(db, "groupMember/"), (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if (
-          item.val().participentID === userInfo.uid ||
-          item.val().creatorID === userInfo.uid
-        ) {
-          arr.push({ ...item.val(), id: item.key });
-        }
+        item.forEach((data) => {
+          arr.push(data.val().memberID);
+        });
       });
-      setFriendList(arr);
+      setGroupMember(arr);
     });
   }, []);
 
-  const handelClick = () => {
-    dispatch(selectGroup(data));
-  };
-if (data.creatorId === userInfo.uid) return null;
+  if (data.creatorId === userInfo.uid) return null;
+  if (groupMember.includes(userInfo.uid)) return null;
   // Close modal on outside click
   window.addEventListener("mousedown", (e) => {
     if (addMemberModal && !e.target.closest(".bg-white")) {
@@ -38,12 +45,11 @@ if (data.creatorId === userInfo.uid) return null;
     }
   });
 
+  console.log("Group Data:", data);
+  
   return (
     <>
-      <div
-        onClick={handelClick}
-        className="w-full flex items-center gap-4 my-4 cursor-pointer"
-      >
+      <div className="w-full flex items-center gap-4 my-4 cursor-pointer">
         <div className="w-full py-2 px-2 flex items-center hover:bg-blue-400 duration-300 ease-in-out rounded-md">
           <div className="flex gap-3 items-center">
             <div className="w-11 h-11 rounded-full overflow-hidden border-2 bg-blue-950 flex items-center justify-center border-blue-400 group-hover:border-white ">
@@ -57,55 +63,19 @@ if (data.creatorId === userInfo.uid) return null;
               </h3>
               <p className="font-inter font-normal text-sm group-hover:text-white">
                 {data.creatorName && data.creatorName.length > 15
-                  ? data.creatorName.substring(0, 11) + "... has created this group."
+                  ? data.creatorName.substring(0, 11) +
+                    "... has created this group."
                   : `${data.creatorName || "Unknown"} has created this group.`}
               </p>
             </div>
           </div>
-          <p className="font-inter font-normal text-3xl group-hover:text-white ml-auto">
-            <PiDotsThreeCircleVertical
-              onClick={() => setAddMemberModal(true)}
-            />
-          </p>
+          <button
+            onClick={handelJoin}
+            className="font-inter font-normal text-md bg-green-400 py-2 px-4 rounded-xl group-hover:text-white ml-auto"
+          >
+            Join
+          </button>
         </div>
-        {addMemberModal && (
-          <div className="fixed top-0 left-0 flex items-center justify-center h-screen w-full z-10 bg-[#0000003e]">
-            <div className="bg-white p-5 rounded-xl">
-              <button
-                onClick={() => setAddMemberModal(false)}
-                className="text-xl font-bold"
-              >
-                X
-              </button>
-              <div className="h-96 w-sm overflow-y-auto">
-                <h3>Add Member in {data.groupName} group</h3>
-                <div className="mt-10 h-8/10 overflow-y-auto">
-                  {friendList.map((item) =>
-                    item.creatorID == userInfo.uid ? (
-                      <GroupAddFriendList
-                        key={item.id}
-                        conVoID={item.id}
-                        name={item.participentName}
-                        avatar={item.participentAvatar}
-                        id={item.participentID}
-                        groupData={data}
-                      />
-                    ) : (
-                      <GroupAddFriendList
-                        key={item.id}
-                        conVoID={item.id}
-                        name={item.creatorName}
-                        avatar={item.creatorAvatar}
-                        id={item.creatorID}
-                        groupData={data}
-                      />
-                    )
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );

@@ -27,6 +27,7 @@ const GroupChatList = () => {
     });
     setCreateGrpModel(false);
     setGroupName("");
+    toast("Group created successfully.");
   };
 
   useEffect(() => {
