@@ -63,7 +63,7 @@ const JoinGroup = ({ data }) => {
               </h3>
               <p className="font-inter font-normal text-sm group-hover:text-white">
                 {data.creatorName && data.creatorName.length > 15
-                  ? data.creatorName.substring(0, 11) +
+                  ? data.creatorName.substring(0, 7) +
                     "... has created this group."
                   : `${data.creatorName || "Unknown"} has created this group.`}
               </p>
