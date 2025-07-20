@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import GroupAddFriendList from "./GroupAddFriendList";
 import { getDatabase, onValue, push, ref, set } from "firebase/database";
 // import { selectGroup } from "../../../store/slices/conversationSlice";
 
@@ -44,8 +43,6 @@ const JoinGroup = ({ data }) => {
       setAddMemberModal(false);
     }
   });
-
-  console.log("Group Data:", data);
   
   return (
     <>
