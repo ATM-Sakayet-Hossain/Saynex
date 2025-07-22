@@ -25,25 +25,28 @@ const JoinGroup = ({ data }) => {
 
   useEffect(() => {
     onValue(ref(db, "groupMember/"), (snapshot) => {
-      let arr = [];
+      let arr = {};
       snapshot.forEach((item) => {
+        const groupId = item.key;
+        let arr2 = [];
         item.forEach((data) => {
-          arr.push(data.val().memberID);
+          arr2.push(data.val().memberID);
         });
+        arr[groupId] = arr2;
       });
       setGroupMember(arr);
     });
   }, []);
 
   if (data.creatorId === userInfo.uid) return null;
-  if (groupMember.includes(userInfo.uid)) return null;
+  if (groupMember[data.id]?.includes(userInfo.uid)) return null;
   // Close modal on outside click
   window.addEventListener("mousedown", (e) => {
     if (addMemberModal && !e.target.closest(".bg-white")) {
       setAddMemberModal(false);
     }
   });
-  
+
   return (
     <>
       <div className="w-full flex items-center gap-4 my-4 cursor-pointer">
